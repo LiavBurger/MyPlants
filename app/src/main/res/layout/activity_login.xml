@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -21,13 +21,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvSignUp"
+        android:id="@+id/tvSignIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-condensed-light"
         android:gravity="center"
-        android:text="@string/sign_up"
+        android:text="@string/sign_in"
         android:textFontWeight="400"
         android:textSize="80sp"
         android:textStyle="bold"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/llcUsername"
+        android:id="@+id/llcEmail"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -48,46 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUp">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/ic_user"
-            android:gravity="bottom" />
-
-        <EditText
-            android:id="@+id/etUserName"
-            android:layout_width="245dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:background="#00FFFFFF"
-            android:gravity="fill_vertical"
-            android:hint="@string/user_name"
-            android:inputType="textPersonName"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="20sp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/llcEmail"
-        android:layout_width="285dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="63dp"
-        android:background="@drawable/enter_text_background"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llcUsername">
-
+        app:layout_constraintTop_toBottomOf="@+id/tvSignIn">
 
         <ImageView
             android:layout_width="25dp"
@@ -98,7 +59,7 @@
             android:gravity="bottom" />
 
         <EditText
-            android:id="@+id/etEmail"
+            android:id="@+id/etUserName"
             android:layout_width="245dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -137,7 +98,7 @@
             android:gravity="bottom" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etEmail"
             android:layout_width="245dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
@@ -151,65 +112,12 @@
             android:textSize="20sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/llcConfirmPassword"
-        android:layout_width="285dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="63dp"
-        android:background="@drawable/enter_text_background"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llcPassword">
-
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/ic_password"
-            android:gravity="bottom" />
-
-        <EditText
-            android:id="@+id/et_re_enter_Password"
-            android:layout_width="245dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:background="#00FFFFFF"
-            android:gravity="fill_vertical"
-            android:hint="@string/re_password"
-            android:inputType="textPassword"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="20sp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
     <Button
-        android:id="@+id/btnSignUp"
+        android:id="@+id/btnSignIn"
         android:layout_width="200dp"
         android:layout_height="58dp"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
-        android:backgroundTint="@color/buttonColor"
-        android:fontFamily="sans-serif-condensed-light"
-        android:text="@string/sign_up"
-        android:textColor="@color/white"
-        android:textFontWeight="400"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llcConfirmPassword" />
-
-    <Button
-        android:id="@+id/btnSignIn"
-        android:layout_width="150dp"
-        android:layout_height="58dp"
-        android:layout_gravity="center"
         android:backgroundTint="@color/buttonColor"
         android:fontFamily="sans-serif-condensed-light"
         android:text="@string/sign_in"
@@ -217,7 +125,20 @@
         android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+        app:layout_constraintTop_toBottomOf="@+id/llcPassword" />
 
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="150dp"
+        android:layout_height="58dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/buttonColor"
+        android:fontFamily="sans-serif-condensed-light"
+        android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:textFontWeight="400"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

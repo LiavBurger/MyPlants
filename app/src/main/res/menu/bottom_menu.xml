@@ -16,4 +16,9 @@
             android:icon="@drawable/ic_community"
             android:title="Community" />
 
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/ic_logout"
+            android:title="Log Out" />
+
 </menu>

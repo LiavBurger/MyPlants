@@ -1,5 +1,6 @@
 package com.myplants
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,5 +32,34 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.logOut -> {
+                    showLogoutConfirmationDialog()
+                    true  // Return true to indicate that the event is handled
+                }
+                else -> NavigationUI.onNavDestinationSelected(item, navController)
+            }
+        }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Log Out")
+            .setMessage("Are you sure you want to log out?")
+            .setPositiveButton("Yes") { dialog, which ->
+                // Handle the logout logic here
+                performLogout()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun performLogout() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

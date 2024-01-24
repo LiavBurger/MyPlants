@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172322171701",
+    "project_id": "myplantsandroid",
+    "storage_bucket": "myplantsandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172322171701:android:a4528460ec31a2d3d1fa7c",
+        "android_client_info": {
+          "package_name": "com.myplants"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq3aDUsxy1owpmDErs9j4LcVVGIePvy9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

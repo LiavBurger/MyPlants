@@ -104,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
         firestore.collection("users").document(auth.currentUser!!.uid)
             .set(user)
             .addOnSuccessListener {
-                displayMessage("Registration successful! Logging in...")
+                displayMessage("Registration successful!")
                 Handler(Looper.getMainLooper()).postDelayed({
                     navigateToMain()
                 }, 1500)

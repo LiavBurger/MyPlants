@@ -9,11 +9,17 @@ import android.widget.Button
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        auth = FirebaseAuth.getInstance()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = Navigation.findNavController(this, R.id.host_fragment)
@@ -52,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Log Out")
             .setMessage("Are you sure you want to log out?")
             .setPositiveButton("Yes") { dialog, which ->
-                // Handle the logout logic here
                 performLogout()
             }
             .setNegativeButton("No", null)
@@ -60,7 +65,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun performLogout() {
+        auth.signOut()
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

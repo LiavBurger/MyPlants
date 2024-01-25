@@ -104,10 +104,10 @@ class RegisterActivity : AppCompatActivity() {
         firestore.collection("users").document(auth.currentUser!!.uid)
             .set(user)
             .addOnSuccessListener {
-                displayMessage("Registration successful!")
+                displayMessage("Registration successful! Logging in...")
                 Handler(Looper.getMainLooper()).postDelayed({
-                    navigateToLogin()
-                }, 2000)
+                    navigateToMain()
+                }, 1500)
             }
             .addOnFailureListener { e ->
                 displayMessage("Failed to store user data: ${e.message}")
@@ -116,6 +116,12 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }

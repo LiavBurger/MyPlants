@@ -4,8 +4,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -51,6 +54,13 @@ class MainActivity : AppCompatActivity() {
                 else -> NavigationUI.onNavDestinationSelected(item, navController)
             }
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            auth.currentUser?.let {
+                val welcomeMessage = "Logged in to ${it.email}"
+                Toast.makeText(this, welcomeMessage, Toast.LENGTH_LONG).show()
+            }
+        }, 500)
     }
 
     private fun showLogoutConfirmationDialog() {

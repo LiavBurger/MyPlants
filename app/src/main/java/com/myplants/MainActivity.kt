@@ -32,21 +32,6 @@ class MainActivity : BaseActivity() {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
-        // Setup the button click listener for the register button
-        val btnToRegister = findViewById<Button>(R.id.btnToRegister)
-        btnToRegister.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Setup the button click listener for the login button
-        val btnToLogin = findViewById<Button>(R.id.btnToSignIn)
-        btnToLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

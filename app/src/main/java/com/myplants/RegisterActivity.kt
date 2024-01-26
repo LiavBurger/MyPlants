@@ -80,8 +80,8 @@ class RegisterActivity : BaseActivity() {
 
     private fun checkUsernameUniqueness(username: String, callback: (Boolean) -> Unit) {
         firestore.collection("users").whereEqualTo("username", username).get()
-            .addOnSuccessListener { documents ->
-                callback(documents.isEmpty)
+            .addOnSuccessListener { snapshot ->
+                callback(snapshot.isEmpty)
             }
             .addOnFailureListener { e ->
                 displayMessage("Error checking username uniqueness: ${e.message}")

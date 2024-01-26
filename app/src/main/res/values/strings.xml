@@ -17,4 +17,8 @@
     <string name="enter_plant_species">Enter The Plant Species</string>
     <string name="remove_plant_fragment">Remove Plant Fragment</string>
     <string name="add_plant_button">Add Plant Button</string>
+    <string name="did_you_know">Did you know?</string>
+    <string name="type">Type:</string>
+    <string name="name">Name:</string>
+    <string name="view">view</string>
 </resources>

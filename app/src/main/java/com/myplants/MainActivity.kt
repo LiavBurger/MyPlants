@@ -13,16 +13,19 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = Navigation.findNavController(this, R.id.host_fragment)
@@ -55,12 +58,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            auth.currentUser?.let {
-                val welcomeMessage = "Logged in to ${it.email}"
-                Toast.makeText(this, welcomeMessage, Toast.LENGTH_LONG).show()
+        fetchAndDisplayUsername()
+    }
+
+    private fun fetchAndDisplayUsername() {
+        val userId = auth.currentUser!!.uid
+        firestore.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                val username = document.getString("username")
+                Toast.makeText(this, "Welcome back, $username", Toast.LENGTH_SHORT).show()
             }
-        }, 500)
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error fetching user data: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun showLogoutConfirmationDialog() {

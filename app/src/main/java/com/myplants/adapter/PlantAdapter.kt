@@ -12,8 +12,8 @@ class PlantAdapter(private var plants: List<Plant>) : RecyclerView.Adapter<Plant
 
     class PlantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val plantImage: ImageView = view.findViewById(R.id.imgPlantImage)
-        val plantName: TextView = view.findViewById(R.id.tv_user_input_name)
-        val plantType: TextView = view.findViewById(R.id.tv_user_input_type)
+        val plantName: TextView = view.findViewById(R.id.tv_plant_name)
+        val plantType: TextView = view.findViewById(R.id.tv_plant_type)
         val viewButton: Button = view.findViewById(R.id.btnViewPlant)
     }
 

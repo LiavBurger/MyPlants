@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -29,6 +31,13 @@ class GardenFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter = PlantAdapter(listOf())
         recyclerView.adapter = adapter
+
+        // Add button
+        val addButton: Button = view.findViewById(R.id.btnAddNewPlant)
+        addButton.setOnClickListener {
+            findNavController().navigate(R.id.action_gardenFragment_to_addPlantFragment)
+        }
+
 
         // Use mock data for testing
         val mockPlants = generateMockPlants()

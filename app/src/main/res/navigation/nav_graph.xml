@@ -10,14 +10,27 @@
         android:name="com.myplants.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/gardenFragment"
         android:name="com.myplants.GardenFragment"
         android:label="fragment_garden"
-        tools:layout="@layout/fragment_garden" />
+        tools:layout="@layout/fragment_garden" >
+        <action
+            android:id="@+id/action_gardenFragment_to_addPlantFragment"
+            app:destination="@id/addPlantFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.myplants.CommunityFragment"
         android:label="fragment_community"
         tools:layout="@layout/fragment_community" />
+
+    <fragment
+        android:id="@+id/addPlantFragment"
+        android:name="com.myplants.AddPlantFragment"
+        android:label="fragment_add_plant"
+        tools:layout="@layout/fragment_add_plant" />
+
 </navigation>

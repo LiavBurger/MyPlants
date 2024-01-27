@@ -43,7 +43,7 @@
 
 
         <TextView
-            android:id="@+id/tv_user_input_name"
+            android:id="@+id/tv_plant_name"
             android:layout_width="@dimen/_130sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvEnterName"/>
 
         <TextView
-            android:id="@+id/tv_user_input_type"
+            android:id="@+id/tv_plant_type"
             android:layout_width="@dimen/_130sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

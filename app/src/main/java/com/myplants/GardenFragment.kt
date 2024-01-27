@@ -20,7 +20,7 @@ class GardenFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PlantAdapter
     private val db = FirebaseFirestore.getInstance()
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,17 +40,16 @@ class GardenFragment : Fragment() {
 
 
         // Use mock data for testing
-        val mockPlants = generateMockPlants()
-        adapter.updatePlants(mockPlants)
+//        val mockPlants = generateMockPlants()
+//        adapter.updatePlants(mockPlants)
 
         // real data
-        // fetchPlantsForUser(userId)
+        fetchPlantsForUser(userId)
         return view
     }
 
     private fun fetchPlantsForUser(userId: String) {
         db.collection("users").document(userId)
-            .collection("gardens").document("main_garden")
             .collection("plants")
             .get()
             .addOnSuccessListener { documents ->

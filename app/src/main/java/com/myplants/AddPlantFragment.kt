@@ -29,7 +29,7 @@ class AddPlantFragment : Fragment() {
         plantTypeEditText = view.findViewById(R.id.etPlantType)
 
         view.findViewById<Button>(R.id.btnAddPlant).setOnClickListener {
-            addPlantToGarden()
+            addPlantToUserGarden()
         }
 
         val cancelButton: Button = view.findViewById(R.id.btnCancel)
@@ -41,7 +41,7 @@ class AddPlantFragment : Fragment() {
         return view
     }
 
-    private fun addPlantToGarden() {
+    private fun addPlantToUserGarden() {
         val name = plantNameEditText.text.toString().trim()
         val type = plantTypeEditText.text.toString().trim()
 
@@ -49,12 +49,11 @@ class AddPlantFragment : Fragment() {
             val plant = hashMapOf(
                 "name" to name,
                 "type" to type,
-                "imageUrl" to "Default Image URL" // Placeholder, replace with actual image URL
+                "imageUrl" to "Default Image URL" // Placeholder, replace with actual image URL after implementing image upload
             )
 
             userId?.let { uid ->
                 db.collection("users").document(uid)
-                    .collection("gardens").document("main_garden")
                     .collection("plants")
                     .add(plant)
                     .addOnSuccessListener {

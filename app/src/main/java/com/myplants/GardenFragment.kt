@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.myplants.model.Plant
 
@@ -17,6 +18,7 @@ class GardenFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PlantAdapter
     private val db = FirebaseFirestore.getInstance()
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,13 +35,14 @@ class GardenFragment : Fragment() {
         adapter.updatePlants(mockPlants)
 
         // real data
-        // fetchPlants()
+        // fetchPlantsForUser(userId)
         return view
     }
 
-
-    private fun fetchPlants() {
-        db.collection("plants")
+    private fun fetchPlantsForUser(userId: String) {
+        db.collection("users").document(userId)
+            .collection("gardens").document("main_garden")
+            .collection("plants")
             .get()
             .addOnSuccessListener { documents ->
                 val plants = documents.map { doc ->
@@ -53,7 +56,7 @@ class GardenFragment : Fragment() {
                 adapter.updatePlants(plants)
             }
             .addOnFailureListener { exception ->
-                Log.d("GardenFragment", "Error getting documents: ", exception)
+                Log.d("GardenFragment", "Error getting plants: ", exception)
             }
     }
 

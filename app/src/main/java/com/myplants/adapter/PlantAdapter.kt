@@ -28,6 +28,7 @@ class PlantAdapter(private var plants: List<Plant>) : RecyclerView.Adapter<Plant
         // For now, using a default image. Replace with actual image loading logic.
         holder.plantName.text = plant.name
         holder.plantType.text = plant.type
+        // holder.plantImage.setImageResource(R.drawable.plant_placeholder)
         // Add click listener for viewButton if needed
     }
 

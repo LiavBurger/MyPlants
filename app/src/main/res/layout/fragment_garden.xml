@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_view_plant"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GardenFragment"
     android:background="@color/background"
     android:orientation="vertical"
-    android:id="@+id/frag_view_plant">
+    tools:context=".GardenFragment">
+
+    <LinearLayout
+        android:id="@+id/linear_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_my_garden"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="@string/my_garden"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_30ssp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnAddNewPlant"
+            android:layout_width="150dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/buttonColor"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="Add new Plant"
+            android:textColor="@color/white"
+            android:textFontWeight="600" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvViewGarden"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_plant">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_header"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/item_plant"></androidx.recyclerview.widget.RecyclerView>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

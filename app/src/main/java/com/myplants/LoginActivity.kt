@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -25,7 +24,7 @@ class LoginActivity : BaseActivity() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
 
-        findViewById<Button>(R.id.btnSignIn).setOnClickListener {
+        findViewById<Button>(R.id.btnAddNewPlant).setOnClickListener {
             attemptLogin()
         }
 

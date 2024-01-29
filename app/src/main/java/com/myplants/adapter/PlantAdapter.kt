@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.myplants.R
 import com.myplants.model.Plant
 
-class PlantAdapter(private var plants: List<Plant>) : RecyclerView.Adapter<PlantAdapter.PlantViewHolder>() {
+class PlantAdapter(private var plants: List<Plant>, private val listener: PlantActionListener) : RecyclerView.Adapter<PlantAdapter.PlantViewHolder>() {
 
     class PlantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val plantImage: ImageView = view.findViewById(R.id.imgPlantImage)
         val plantName: TextView = view.findViewById(R.id.tv_plant_name)
         val plantType: TextView = view.findViewById(R.id.tv_plant_type)
-        val viewButton: Button = view.findViewById(R.id.btnViewPlant)
+//        val viewButton: Button = view.findViewById(R.id.btnViewPlant)
+        val deleteButton: Button = view.findViewById(R.id.btnDeletePlant)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantViewHolder {
@@ -24,12 +25,15 @@ class PlantAdapter(private var plants: List<Plant>) : RecyclerView.Adapter<Plant
 
     override fun onBindViewHolder(holder: PlantViewHolder, position: Int) {
         val plant = plants[position]
-        // Set plant image, name, and type here
         // For now, using a default image. Replace with actual image loading logic.
         holder.plantName.text = plant.name
         holder.plantType.text = plant.type
         // holder.plantImage.setImageResource(R.drawable.plant_placeholder)
-        // Add click listener for viewButton if needed
+
+        // Add click listeners
+        holder.deleteButton.setOnClickListener {
+            listener.onDeletePlant(plant.id)
+        }
     }
 
     override fun getItemCount() = plants.size
@@ -38,4 +42,9 @@ class PlantAdapter(private var plants: List<Plant>) : RecyclerView.Adapter<Plant
         plants = newPlants
         notifyDataSetChanged()
     }
+
+    interface PlantActionListener {
+        fun onDeletePlant(plantId: String)
+    }
+
 }

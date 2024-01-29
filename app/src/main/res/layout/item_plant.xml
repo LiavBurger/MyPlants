@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="match_parent"
         android:background="@color/cardBackground">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -73,15 +73,42 @@
             app:layout_constraintStart_toEndOf="@id/tvEnterType"
             app:layout_constraintTop_toTopOf="@id/tvEnterType" />
 
+<!--        <Button-->
+<!--            android:id="@+id/btnViewPlant"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:minWidth="70dp"-->
+<!--            android:backgroundTint="@color/buttonColor"-->
+<!--            android:text="@string/view"-->
+<!--            android:paddingLeft="8dp"-->
+<!--            android:paddingRight="8dp"-->
+<!--            app:layout_constraintStart_toStartOf="@id/tvEnterType"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tvEnterType"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
         <Button
-            android:id="@+id/btnViewPlant"
-            android:layout_width="90dp"
+            android:id="@+id/btnEditPlant"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:backgroundTint="@color/buttonColor"
-            android:text="@string/view"
-            android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintStart_toStartOf="@id/tvEnterType"
-            app:layout_constraintTop_toBottomOf="@id/tvEnterType"/>
+            android:text="@string/edit"
+            app:layout_constraintTop_toBottomOf="@id/tv_plant_type"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvEnterType" />
+
+        <Button
+            android:id="@+id/btnDeletePlant"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:backgroundTint="@color/buttonColor"
+            android:text="@string/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnEditPlant"
+            app:layout_constraintTop_toBottomOf="@id/tv_plant_type"
+            app:layout_constraintVertical_bias="0.529" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

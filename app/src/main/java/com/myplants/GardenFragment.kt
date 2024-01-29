@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.myplants.model.Plant
 
-class GardenFragment : Fragment() {
+class GardenFragment : Fragment(), PlantAdapter.PlantActionListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PlantAdapter
@@ -29,7 +30,7 @@ class GardenFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_garden, container, false)
         recyclerView = view.findViewById(R.id.rvViewGarden)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = PlantAdapter(listOf())
+        adapter = PlantAdapter(listOf(), this)
         recyclerView.adapter = adapter
 
         // Add button
@@ -38,14 +39,26 @@ class GardenFragment : Fragment() {
             findNavController().navigate(R.id.action_gardenFragment_to_addPlantFragment)
         }
 
-
-        // Use mock data for testing
-//        val mockPlants = generateMockPlants()
-//        adapter.updatePlants(mockPlants)
-
         // real data
         fetchPlantsForUser(userId)
         return view
+    }
+
+    override fun onDeletePlant(plantId: String) {
+        // Firestore deletion logic
+        userId.let { uid ->
+            db.collection("users").document(uid)
+                .collection("plants").document(plantId)
+                .delete()
+                .addOnSuccessListener {
+                    Toast.makeText(context, "Plant successfully deleted!", Toast.LENGTH_SHORT).show()
+                    // refresh the list
+                    fetchPlantsForUser(uid)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Error deleting plant", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun fetchPlantsForUser(userId: String) {
@@ -67,19 +80,4 @@ class GardenFragment : Fragment() {
                 Log.d("GardenFragment", "Error getting plants: ", exception)
             }
     }
-
-    private fun generateMockPlants(): List<Plant> {
-        return listOf(
-            Plant(id = "1", name = "Rose", type = "Flower", imageUrl = "Default Image URL"),
-            Plant(id = "2", name = "Tulip", type = "Flower", imageUrl = "Default Image URL"),
-            Plant(id = "3", name = "Fern", type = "Foliage", imageUrl = "Default Image URL"),
-            Plant(id = "4", name = "Cactus", type = "Succulent", imageUrl = "Default Image URL"),
-            Plant(id = "5", name = "Cactus2", type = "Succulent", imageUrl = "Default Image URL"),
-            Plant(id = "6", name = "Cactus3", type = "Succulent", imageUrl = "Default Image URL"),
-            Plant(id = "7", name = "Cactus4", type = "Succulent", imageUrl = "Default Image URL"),
-            Plant(id = "8", name = "Cactus5", type = "Succulent", imageUrl = "Default Image URL")
-            // Add more mock plants as needed
-        )
-    }
-
 }

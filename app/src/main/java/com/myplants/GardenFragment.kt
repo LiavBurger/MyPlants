@@ -1,6 +1,7 @@
 package com.myplants
 
 import PlantAdapter
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -45,7 +46,23 @@ class GardenFragment : Fragment(), PlantAdapter.PlantActionListener {
     }
 
     override fun onDeletePlant(plantId: String) {
-        // Firestore deletion logic
+        showDeleteConfirmationDialog(plantId)
+    }
+
+    private fun showDeleteConfirmationDialog(plantId: String) {
+        activity?.let {
+            AlertDialog.Builder(it)
+                .setTitle("Delete Plant")
+                .setMessage("Are you sure you want to delete this plant?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    deletePlant(plantId)
+                }
+                .setNegativeButton("No", null)
+                .show()
+        }
+    }
+
+    private fun deletePlant(plantId: String) {
         userId.let { uid ->
             db.collection("users").document(uid)
                 .collection("plants").document(plantId)
@@ -60,6 +77,8 @@ class GardenFragment : Fragment(), PlantAdapter.PlantActionListener {
                 }
         }
     }
+
+
 
     private fun fetchPlantsForUser(userId: String) {
         db.collection("users").document(userId)

@@ -105,8 +105,7 @@
             android:text="@string/delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnEditPlant"
-            app:layout_constraintTop_toBottomOf="@id/tv_plant_type"
-            app:layout_constraintVertical_bias="0.529" />
+            app:layout_constraintTop_toBottomOf="@id/tv_plant_type" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

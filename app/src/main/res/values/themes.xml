@@ -3,7 +3,7 @@
     <style name="Base.Theme.MyPlants" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#2E7800</item>
-        <item name="colorPrimaryVariant">@color/rc</item>
+        <item name="colorPrimaryVariant">@color/hint</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

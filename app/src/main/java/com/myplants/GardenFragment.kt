@@ -49,6 +49,12 @@ class GardenFragment : Fragment(), PlantAdapter.PlantActionListener {
         showDeleteConfirmationDialog(plantId)
     }
 
+    override fun onEditPlant(plant: Plant) {
+        val action = GardenFragmentDirections.actionGardenFragmentToEditPlantFragment(plant.id, plant.name, plant.type)
+        findNavController().navigate(action)
+    }
+
+
     private fun showDeleteConfirmationDialog(plantId: String) {
         activity?.let {
             AlertDialog.Builder(it)
@@ -77,8 +83,6 @@ class GardenFragment : Fragment(), PlantAdapter.PlantActionListener {
                 }
         }
     }
-
-
 
     private fun fetchPlantsForUser(userId: String) {
         db.collection("users").document(userId)

@@ -69,7 +69,7 @@
             android:hint="@string/user_name"
             android:inputType="textPersonName"
             android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
+            android:textColorHint="@color/hint"
             android:textSize="20sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -108,7 +108,7 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
+            android:textColorHint="@color/hint"
             android:textSize="20sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -147,7 +147,7 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
+            android:textColorHint="@color/hint"
             android:textSize="20sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -186,7 +186,7 @@
             android:hint="@string/re_password"
             android:inputType="textPassword"
             android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
+            android:textColorHint="@color/hint"
             android:textSize="20sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

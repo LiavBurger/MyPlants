@@ -15,6 +15,7 @@ class PlantAdapter(private var plants: List<Plant>, private val listener: PlantA
         val plantName: TextView = view.findViewById(R.id.tv_plant_name)
         val plantType: TextView = view.findViewById(R.id.tv_plant_type)
 //        val viewButton: Button = view.findViewById(R.id.btnViewPlant)
+        val editButton: Button = view.findViewById(R.id.btnEditPlant)
         val deleteButton: Button = view.findViewById(R.id.btnDeletePlant)
     }
 
@@ -31,6 +32,9 @@ class PlantAdapter(private var plants: List<Plant>, private val listener: PlantA
         // holder.plantImage.setImageResource(R.drawable.plant_placeholder)
 
         // Add click listeners
+        holder.editButton.setOnClickListener {
+            listener.onEditPlant(plant)
+        }
         holder.deleteButton.setOnClickListener {
             listener.onDeletePlant(plant.id)
         }
@@ -45,6 +49,7 @@ class PlantAdapter(private var plants: List<Plant>, private val listener: PlantA
 
     interface PlantActionListener {
         fun onDeletePlant(plantId: String)
+        fun onEditPlant(plant: Plant)
     }
 
 }

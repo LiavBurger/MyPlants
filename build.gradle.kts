@@ -4,6 +4,13 @@ buildscript {
         classpath("com.android.tools.build:gradle:8.2.2")
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.9")
     }
+    repositories {
+        google()
+    }
+    dependencies {
+        val navVersion = "2.7.6"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
+    }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

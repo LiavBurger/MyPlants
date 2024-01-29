@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyPlants" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/rc</item>
+        <item name="colorPrimary">@color/hint</item>
         <item name="colorPrimaryVariant">@color/ds</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->

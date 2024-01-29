@@ -1,6 +1,7 @@
 package com.myplants
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-
-
-class AddPlantFragment : Fragment() {
+import androidx.navigation.fragment.findNavController
+class EditPlantFragment : Fragment() {
 
     private lateinit var plantNameEditText: EditText
     private lateinit var plantTypeEditText: EditText
@@ -24,12 +23,17 @@ class AddPlantFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_add_plant, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_plant, container, false)
+
         plantNameEditText = view.findViewById(R.id.etPlantName)
         plantTypeEditText = view.findViewById(R.id.etPlantType)
 
-        view.findViewById<Button>(R.id.btnAddPlant).setOnClickListener {
-            addPlantToUserGarden()
+        val plantId = arguments?.getString("plantId") ?: ""
+        plantNameEditText.setText(arguments?.getString("plantName"))
+        plantTypeEditText.setText(arguments?.getString("plantType"))
+
+        view.findViewById<Button>(R.id.btnSaveChanges).setOnClickListener {
+            savePlantChanges(plantId)
         }
 
         view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
@@ -40,27 +44,26 @@ class AddPlantFragment : Fragment() {
         return view
     }
 
-    private fun addPlantToUserGarden() {
+    private fun savePlantChanges(plantId: String) {
         val name = plantNameEditText.text.toString().trim()
         val type = plantTypeEditText.text.toString().trim()
 
         if (name.isNotEmpty() && type.isNotEmpty()) {
-            val plant = hashMapOf(
+            val updatedPlant = hashMapOf(
                 "name" to name,
-                "type" to type,
-                "imageUrl" to "Default Image URL" // Placeholder, replace with actual image URL after implementing image upload
+                "type" to type
+                // Add image URL if you're handling images
             )
 
             userId?.let { uid ->
                 db.collection("users").document(uid)
-                    .collection("plants")
-                    .add(plant)
+                    .collection("plants").document(plantId)
+                    .update(updatedPlant as Map<String, Any>)
                     .addOnSuccessListener {
-                        Toast.makeText(context, "Plant added successfully!", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack() // Navigate back to the GardenFragment
+                        findNavController().popBackStack()
                     }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(context, "Error adding plant: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Error updating plant", Toast.LENGTH_SHORT).show()
                     }
             }
         } else {

@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_gardenFragment_to_addPlantFragment"
             app:destination="@id/addPlantFragment" />
+        <action
+            android:id="@+id/action_gardenFragment_to_editPlantFragment"
+            app:destination="@id/editPlantFragment" />
     </fragment>
 
     <fragment
@@ -32,5 +35,21 @@
         android:name="com.myplants.AddPlantFragment"
         android:label="fragment_add_plant"
         tools:layout="@layout/fragment_add_plant" />
+
+    <fragment
+        android:id="@+id/editPlantFragment"
+        android:name="com.myplants.EditPlantFragment"
+        android:label="fragment_edit_plant"
+        tools:layout="@layout/fragment_edit_plant">
+        <argument
+            android:name="plantId"
+            app:argType="string" />
+        <argument
+            android:name="plantName"
+            app:argType="string" />
+        <argument
+            android:name="plantType"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

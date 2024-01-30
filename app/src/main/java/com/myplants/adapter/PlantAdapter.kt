@@ -11,7 +11,7 @@ import com.myplants.model.Plant
 class PlantAdapter(private var plants: List<Plant>, private val listener: PlantActionListener) : RecyclerView.Adapter<PlantAdapter.PlantViewHolder>() {
 
     class PlantViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val plantImage: ImageView = view.findViewById(R.id.imgPlantImage)
+        val plantImage: ImageView = view.findViewById(R.id.ownerImage)
         val plantName: TextView = view.findViewById(R.id.tv_plant_name)
         val plantType: TextView = view.findViewById(R.id.tv_plant_type)
 //        val viewButton: Button = view.findViewById(R.id.btnViewPlant)

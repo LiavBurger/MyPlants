@@ -17,7 +17,7 @@ class EditPlantFragment : Fragment() {
     private lateinit var plantNameEditText: EditText
     private lateinit var plantTypeEditText: EditText
     private val db = FirebaseFirestore.getInstance()
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +55,7 @@ class EditPlantFragment : Fragment() {
                 // Add image URL if you're handling images
             )
 
-            userId?.let { uid ->
+            userId.let { uid ->
                 db.collection("users").document(uid)
                     .collection("plants").document(plantId)
                     .update(updatedPlant as Map<String, Any>)

@@ -29,4 +29,5 @@
     <string name="delete">delete</string>
     <string name="save_changes">Save Changes</string>
     <string name="back">Back</string>
+    <string name="garden_title">%1$s\'s Garden</string>
 </resources>

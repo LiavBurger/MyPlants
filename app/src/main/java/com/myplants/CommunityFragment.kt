@@ -1,6 +1,7 @@
 package com.myplants
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.myplants.adapter.GardenAdapter
 import com.myplants.model.Garden
-
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
 
 class CommunityFragment : Fragment(), GardenAdapter.GardenActionListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: GardenAdapter
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,28 +32,53 @@ class CommunityFragment : Fragment(), GardenAdapter.GardenActionListener {
         return view
     }
 
+//    private fun fetchCommunityGardens() {
+//        // Mock data for demonstration; replace with actual Firestore fetching logic
+//        val mockGardens = listOf(
+//            Garden(userId = "user1", ownerName = "Alice"),
+//            Garden(userId = "user2", ownerName = "Bob"),
+//            Garden(userId = "user1", ownerName = "Alice"),
+//            Garden(userId = "user2", ownerName = "Bob"),
+//            Garden(userId = "user1", ownerName = "Alice"),
+//            Garden(userId = "user2", ownerName = "Bob"),
+//            Garden(userId = "user1", ownerName = "Alice"),
+//            Garden(userId = "user2", ownerName = "Bob"),
+//            Garden(userId = "user1", ownerName = "Alice"),
+//            Garden(userId = "user2", ownerName = "Bob"),
+//            Garden(userId = "user1", ownerName = "Alice"),
+//            Garden(userId = "user2", ownerName = "Bob"),
+//            // Add more mock gardens as needed
+//        )
+//        adapter.updateGardens(mockGardens)
+//    }
+
     private fun fetchCommunityGardens() {
-        // Mock data for demonstration; replace with actual Firestore fetching logic
-        val mockGardens = listOf(
-            Garden(userId = "user1", ownerName = "Alice"),
-            Garden(userId = "user2", ownerName = "Bob"),
-            Garden(userId = "user1", ownerName = "Alice"),
-            Garden(userId = "user2", ownerName = "Bob"),
-            Garden(userId = "user1", ownerName = "Alice"),
-            Garden(userId = "user2", ownerName = "Bob"),
-            Garden(userId = "user1", ownerName = "Alice"),
-            Garden(userId = "user2", ownerName = "Bob"),
-            Garden(userId = "user1", ownerName = "Alice"),
-            Garden(userId = "user2", ownerName = "Bob"),
-            Garden(userId = "user1", ownerName = "Alice"),
-            Garden(userId = "user2", ownerName = "Bob"),
-            // Add more mock gardens as needed
-        )
-        adapter.updateGardens(mockGardens)
+        val gardens = mutableListOf<Garden>()
+
+        // Fetch all users from Firestore
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (doc in documents) {
+                    val userId = doc.id
+                    val ownerName = doc.getString("username") ?: "Unknown" // Assuming you have a 'name' field in your user documents
+
+                    // Create a Garden object and add it to the list
+                    gardens.add(Garden(userId, ownerName))
+                }
+
+                // Update the RecyclerView adapter with the fetched gardens
+                adapter.updateGardens(gardens)
+            }
+            .addOnFailureListener { exception ->
+                Log.d("CommunityFragment", "Error getting community gardens: ", exception)
+            }
     }
 
+
     override fun onViewGarden(userId: String) {
-        // Implement navigation to view a selected garden
-        // This will require passing the userId to the GardenFragment or a similar fragment for displaying other users' gardens
+        val action = CommunityFragmentDirections.actionCommunityFragmentToCommunityGardenFragment(userId)
+        findNavController().navigate(action)
     }
+
 }

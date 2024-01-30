@@ -14,7 +14,7 @@ class PlantAdapter(private var plants: List<Plant>, private val listener: PlantA
         val plantImage: ImageView = view.findViewById(R.id.ownerImage)
         val plantName: TextView = view.findViewById(R.id.tv_plant_name)
         val plantType: TextView = view.findViewById(R.id.tv_plant_type)
-//        val viewButton: Button = view.findViewById(R.id.btnViewPlant)
+
         val editButton: Button = view.findViewById(R.id.btnEditPlant)
         val deleteButton: Button = view.findViewById(R.id.btnDeletePlant)
     }

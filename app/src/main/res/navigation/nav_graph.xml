@@ -28,7 +28,15 @@
         android:id="@+id/communityFragment"
         android:name="com.myplants.CommunityFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community">
+        <action
+            android:id="@+id/action_communityFragment_to_communityGardenFragment"
+            app:destination="@id/communityGardenFragment">
+            <argument
+                android:name="userId"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/addPlantFragment"
@@ -51,5 +59,12 @@
             android:name="plantType"
             app:argType="string" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/communityGardenFragment"
+        android:name="com.myplants.CommunityGardenFragment"
+        android:label="fragment_community_garden"
+        tools:layout="@layout/fragment_community_garden"/>
 
 </navigation>

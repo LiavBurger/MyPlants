@@ -6,7 +6,7 @@
     android:layout_height="@dimen/_150sdp"
     app:cardElevation="30dp"
     app:cardCornerRadius="15dp"
-    android:layout_margin="16dp">
+    android:layout_margin="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         </com.google.android.material.imageview.ShapeableImageView>
 
         <Button
-            android:id="@+id/btnEditPlant"
+            android:id="@+id/btnViewGarden"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:backgroundTint="@color/buttonColor"

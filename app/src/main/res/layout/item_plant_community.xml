@@ -14,7 +14,7 @@
         android:background="@color/cardBackground">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ownerImage"
+            android:id="@+id/plantImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@android:drawable/ic_menu_gallery"
@@ -37,7 +37,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_12sdp"
-            app:layout_constraintStart_toEndOf="@id/ownerImage"
+            app:layout_constraintStart_toEndOf="@id/plantImage"
             app:layout_constraintTop_toTopOf="parent"/>
 
 

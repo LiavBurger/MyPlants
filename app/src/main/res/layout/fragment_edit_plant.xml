@@ -33,7 +33,7 @@
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ownerImage"
+        android:id="@+id/plantImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -60,7 +60,7 @@
         android:src="@android:drawable/ic_menu_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toStartOf="@+id/ownerImage"
+        app:layout_constraintStart_toStartOf="@+id/plantImage"
         app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="@color/buttonColor" />
 
@@ -76,7 +76,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ownerImage">
+        app:layout_constraintTop_toBottomOf="@+id/plantImage">
 
         <ImageView
             android:layout_width="25dp"

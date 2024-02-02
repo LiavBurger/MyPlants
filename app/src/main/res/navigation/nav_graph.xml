@@ -58,6 +58,9 @@
         <argument
             android:name="plantType"
             app:argType="string" />
+        <argument
+            android:name="plantImage"
+            app:argType="string" />
     </fragment>
 
 

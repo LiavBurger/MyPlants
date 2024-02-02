@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.myplants.R
 import com.myplants.model.Plant
+import com.squareup.picasso.Picasso
 
 class PlantAdapter(private var plants: List<Plant>, private val listener: PlantActionListener) : RecyclerView.Adapter<PlantAdapter.PlantViewHolder>() {
 
@@ -26,10 +27,10 @@ class PlantAdapter(private var plants: List<Plant>, private val listener: PlantA
 
     override fun onBindViewHolder(holder: PlantViewHolder, position: Int) {
         val plant = plants[position]
-        // For now, using a default image. Replace with actual image loading logic.
+
         holder.plantName.text = plant.name
         holder.plantType.text = plant.type
-        // holder.plantImage.setImageResource(R.drawable.plant_placeholder)
+        Picasso.get().load(plant.imageUrl).into(holder.plantImage)
 
         // Add click listeners
         holder.editButton.setOnClickListener {

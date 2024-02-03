@@ -40,9 +40,6 @@ class CommunityGardenFragment : Fragment() {
                 val title = resources.getString(R.string.garden_title, username)
                 view.findViewById<TextView>(R.id.tv_community_garden_title).text = title
             }
-//        val selectedUserImageUrl = arguments?.getString("userImageUrl")
-
-
 
         selectedUserId?.let { userId ->
             fetchPlantsForUser(userId)

@@ -61,10 +61,11 @@ class CommunityFragment : Fragment(), GardenAdapter.GardenActionListener {
             .addOnSuccessListener { documents ->
                 for (doc in documents) {
                     val userId = doc.id
-                    val ownerName = doc.getString("username") ?: "Unknown" // Assuming you have a 'name' field in your user documents
+                    val ownerName = doc.getString("username") ?: "Unknown"
+                    val ownerImageUrl = doc.getString("imageUrl") ?: ""
 
                     // Create a Garden object and add it to the list
-                    gardens.add(Garden(userId, ownerName))
+                    gardens.add(Garden(userId, ownerName, ownerImageUrl))
                 }
 
                 // Update the RecyclerView adapter with the fetched gardens

@@ -17,7 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import java.util.UUID
 
 class RegisterActivity : BaseActivity() {
 
@@ -74,26 +76,25 @@ class RegisterActivity : BaseActivity() {
         val password = etPassword.text.toString().trim()
         val confirmPassword = etConfirmPassword.text.toString().trim()
         val username = etUsername.text.toString().trim()
-        val profileImageUri = selectedImageUri
 
-        if (!validateForm(username, email, password, confirmPassword, profileImageUri)) return
+        if (!validateForm(username, email, password, confirmPassword)) return
 
         checkUsernameUniqueness(username) { isUnique ->
             if (isUnique) {
-                registerUser(email, password, username, profileImageUri)
+                registerUser(email, password, username)
             } else {
                 displayMessage("Username already taken")
             }
         }
     }
 
-    private fun validateForm(username: String, email: String, password: String, confirmPassword: String, profileImageUri: Uri?): Boolean {
+    private fun validateForm(username: String, email: String, password: String, confirmPassword: String): Boolean {
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             displayMessage("Please fill in all fields")
             return false
         }
 
-        if (profileImageUri == null) {
+        if (selectedImageUri == null) {
             displayMessage("Please select your profile picture")
             return false
         }
@@ -120,19 +121,26 @@ class RegisterActivity : BaseActivity() {
             }
     }
 
-    private fun registerUser(email: String, password: String, username: String, profileImageUri: Uri?) {
+    private fun registerUser(email: String, password: String, username: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    storeUserData(username, email, profileImageUri)
+                    val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/${UUID.randomUUID()}")
+                    storageRef.putFile(selectedImageUri!!)
+                        .addOnSuccessListener { taskSnapshot ->
+                            taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+                                val profileImageUri = uri.toString()
+                                storeUserData(username, email, profileImageUri)
+                            }
+                        }
                 } else {
                     displayMessage("Registration failed: ${task.exception?.message}")
                 }
             }
     }
 
-    private fun storeUserData(username: String, email: String, profileImageUri: Uri?) {
-        val user = hashMapOf("username" to username, "email" to email, "profileImageUri" to profileImageUri.toString())
+    private fun storeUserData(username: String, email: String, profileImageUrl: String) {
+        val user = hashMapOf("username" to username, "email" to email, "imageUrl" to profileImageUrl)
         firestore.collection("users").document(auth.currentUser!!.uid)
             .set(user)
             .addOnSuccessListener {

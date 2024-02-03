@@ -9,22 +9,10 @@
     tools:context=".RegisterActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed-light"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/tvSignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-condensed-light"
         android:gravity="center"
         android:text="@string/sign_up"
@@ -33,22 +21,47 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@android:drawable/ic_menu_gallery"
+        android:padding="5dp"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        app:strokeColor="@color/cardBackground"
+        app:strokeWidth="5dp"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabtnCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cardBackground"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_camera"
+        app:rippleColor="@color/buttonColor"
+        app:layout_constraintEnd_toEndOf="@id/profileImage"
+        app:layout_constraintBottom_toBottomOf="@id/profileImage"/>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llcUsername"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="63dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/enter_text_background"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSignUp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImage">
 
         <ImageView
             android:layout_width="25dp"
@@ -77,15 +90,10 @@
         android:id="@+id/llcEmail"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="63dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="63dp"
         android:background="@drawable/enter_text_background"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llcUsername">
 
 
@@ -116,15 +124,10 @@
         android:id="@+id/llcPassword"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="63dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="63dp"
         android:background="@drawable/enter_text_background"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llcEmail">
 
 
@@ -155,15 +158,10 @@
         android:id="@+id/llcConfirmPassword"
         android:layout_width="285dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="63dp"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="63dp"
         android:background="@drawable/enter_text_background"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llcPassword">
 
 

@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/tv_home"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:fontFamily="sans-serif-condensed-light"
@@ -28,6 +28,17 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_30ssp"
             android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnMyProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/buttonColor"
+            android:fontFamily="sans-serif-condensed-light"
+            android:text="My Profile"
+            android:textColor="@color/white"
+            android:textFontWeight="400" />
     </LinearLayout>
 
     <TextView
@@ -44,10 +55,9 @@
         app:layout_constraintTop_toBottomOf="@id/linear_header" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/random_country_card"
+        android:id="@+id/random_plant_fact"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_160sdp"
-
+        android:layout_height="@dimen/_200sdp"
         android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_25sdp"
@@ -75,7 +85,6 @@
             app:layout_constraintStart_toStartOf="@id/linear_header"
             app:layout_constraintTop_toBottomOf="@id/linear_header" />
     </androidx.cardview.widget.CardView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

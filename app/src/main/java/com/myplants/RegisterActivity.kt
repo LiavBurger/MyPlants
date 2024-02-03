@@ -1,25 +1,37 @@
 package com.myplants
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 
 class RegisterActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
+    private lateinit var ivProfileImage: ImageView
     private lateinit var etUsername: EditText
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
+
+    private var selectedImageUri: Uri? = null
+    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +40,7 @@ class RegisterActivity : BaseActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        ivProfileImage = findViewById(R.id.profileImage)
         etUsername = findViewById(R.id.etUserName)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
@@ -40,6 +53,20 @@ class RegisterActivity : BaseActivity() {
         findViewById<Button>(R.id.btnAddNewPlant).setOnClickListener {
             navigateToLogin()
         }
+
+
+
+        // For choosing profile image
+        pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                selectedImageUri = result.data?.data
+                Picasso.get().load(selectedImageUri).into(ivProfileImage)
+            }
+        }
+
+        findViewById<FloatingActionButton>(R.id.fabtnCamera).setOnClickListener {
+            openGalleryForImage()
+        }
     }
 
     private fun attemptRegistration() {
@@ -47,21 +74,27 @@ class RegisterActivity : BaseActivity() {
         val password = etPassword.text.toString().trim()
         val confirmPassword = etConfirmPassword.text.toString().trim()
         val username = etUsername.text.toString().trim()
+        val profileImageUri = selectedImageUri
 
-        if (!validateForm(username, email, password, confirmPassword)) return
+        if (!validateForm(username, email, password, confirmPassword, profileImageUri)) return
 
         checkUsernameUniqueness(username) { isUnique ->
             if (isUnique) {
-                registerUser(email, password, username)
+                registerUser(email, password, username, profileImageUri)
             } else {
                 displayMessage("Username already taken")
             }
         }
     }
 
-    private fun validateForm(username: String, email: String, password: String, confirmPassword: String): Boolean {
+    private fun validateForm(username: String, email: String, password: String, confirmPassword: String, profileImageUri: Uri?): Boolean {
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             displayMessage("Please fill in all fields")
+            return false
+        }
+
+        if (profileImageUri == null) {
+            displayMessage("Please select your profile picture")
             return false
         }
 
@@ -87,19 +120,19 @@ class RegisterActivity : BaseActivity() {
             }
     }
 
-    private fun registerUser(email: String, password: String, username: String) {
+    private fun registerUser(email: String, password: String, username: String, profileImageUri: Uri?) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    storeUserData(username, email)
+                    storeUserData(username, email, profileImageUri)
                 } else {
                     displayMessage("Registration failed: ${task.exception?.message}")
                 }
             }
     }
 
-    private fun storeUserData(username: String, email: String) {
-        val user = hashMapOf("username" to username, "email" to email)
+    private fun storeUserData(username: String, email: String, profileImageUri: Uri?) {
+        val user = hashMapOf("username" to username, "email" to email, "profileImageUri" to profileImageUri.toString())
         firestore.collection("users").document(auth.currentUser!!.uid)
             .set(user)
             .addOnSuccessListener {
@@ -128,5 +161,12 @@ class RegisterActivity : BaseActivity() {
     private fun displayMessage(message: String) {
         val rootView: View = findViewById(android.R.id.content)
         Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun openGalleryForImage() {
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+        }
+        pickImageLauncher.launch(intent)
     }
 }

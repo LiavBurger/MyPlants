@@ -6,75 +6,91 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.myplants.adapter.GardenAdapter
-import com.myplants.model.Garden
+import com.myplants.database.AppDatabase
+import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
+import com.myplants.model.Garden
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 class CommunityFragment : Fragment(), GardenAdapter.GardenActionListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: GardenAdapter
+    private lateinit var database: AppDatabase
     private val db = FirebaseFirestore.getInstance()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_community, container, false)
         recyclerView = view.findViewById(R.id.rvCommunityGardens)
         adapter = GardenAdapter(listOf(), this)
         recyclerView.adapter = adapter
+        database = AppDatabase.getDatabase(requireContext())
 
+        loadGardensFromCache()
         fetchCommunityGardens()
 
         return view
     }
 
-//    private fun fetchCommunityGardens() {
-//        // Mock data for demonstration; replace with actual Firestore fetching logic
-//        val mockGardens = listOf(
-//            Garden(userId = "user1", ownerName = "Alice"),
-//            Garden(userId = "user2", ownerName = "Bob"),
-//            Garden(userId = "user1", ownerName = "Alice"),
-//            Garden(userId = "user2", ownerName = "Bob"),
-//            Garden(userId = "user1", ownerName = "Alice"),
-//            Garden(userId = "user2", ownerName = "Bob"),
-//            Garden(userId = "user1", ownerName = "Alice"),
-//            Garden(userId = "user2", ownerName = "Bob"),
-//            Garden(userId = "user1", ownerName = "Alice"),
-//            Garden(userId = "user2", ownerName = "Bob"),
-//            Garden(userId = "user1", ownerName = "Alice"),
-//            Garden(userId = "user2", ownerName = "Bob"),
-//            // Add more mock gardens as needed
-//        )
-//        adapter.updateGardens(mockGardens)
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        // Load from cache first
+//        loadGardensFromCache()
+//
+//        // Then, asynchronously fetch from Firestore and update cache
+//        fetchCommunityGardens()
 //    }
 
-    private fun fetchCommunityGardens() {
-        val gardens = mutableListOf<Garden>()
+    private fun loadGardensFromCache() {
+        print("Loading gardens from cache")
+        lifecycleScope.launch(Dispatchers.IO) {
+            val cachedGardens = database.gardenDao().getAll()
+            withContext(Dispatchers.Main) {
+                adapter.updateGardens(cachedGardens)
+            }
+        }
+    }
 
-        // Fetch all users from Firestore
+    private fun fetchCommunityGardens() {
         db.collection("users")
             .get()
             .addOnSuccessListener { documents ->
+                val gardens = mutableListOf<Garden>()
                 for (doc in documents) {
                     val userId = doc.id
                     val ownerName = doc.getString("username") ?: "Unknown"
                     val ownerImageUrl = doc.getString("imageUrl") ?: ""
 
-                    // Create a Garden object and add it to the list
                     gardens.add(Garden(userId, ownerName, ownerImageUrl))
                 }
 
-                // Update the RecyclerView adapter with the fetched gardens
-                adapter.updateGardens(gardens)
+                // Update the local cache with the fetched gardens
+                lifecycleScope.launch {
+                    // Clear existing cache and insert new data
+                    database.gardenDao().deleteAll()
+                    database.gardenDao().insertAll(gardens)
+
+                    // Now update the UI with the new list from cache
+                    adapter.updateGardens(database.gardenDao().getAll())
+                }
             }
             .addOnFailureListener { exception ->
                 Log.d("CommunityFragment", "Error getting community gardens: ", exception)
+
+                // If fetch fails, attempt to load from cache anyway
+                lifecycleScope.launch {
+                    adapter.updateGardens(database.gardenDao().getAll())
+                }
             }
     }
+
 
 
     override fun onViewGarden(userId: String) {

@@ -55,9 +55,10 @@
         app:layout_constraintTop_toBottomOf="@id/linear_header" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/random_plant_fact"
+        android:id="@+id/random_plant_fact_cv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_200sdp"
         android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_25sdp"
@@ -69,12 +70,11 @@
         app:layout_constraintTop_toBottomOf="@id/tv_did_you_know"
         app:cardBackgroundColor="@color/cardBackground">
 
-
         <TextView
+            android:id="@+id/random_plant_fact_tv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed-light"
-            android:text="TODO:\nRandom fact from external API"
             android:textColor="@color/white"
             android:textSize="@dimen/_17ssp"
             android:textStyle="bold"
@@ -86,5 +86,15 @@
             app:layout_constraintTop_toBottomOf="@id/linear_header" />
     </androidx.cardview.widget.CardView>
 
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="@+id/random_plant_fact_cv"
+        app:layout_constraintBottom_toBottomOf="@+id/random_plant_fact_cv"
+        app:layout_constraintStart_toStartOf="@+id/random_plant_fact_cv"
+        app:layout_constraintEnd_toEndOf="@+id/random_plant_fact_cv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

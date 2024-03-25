@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -22,27 +22,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.myplants.R
 
 class ProfileFragment : Fragment() {
 
     private lateinit var profileImageView: ImageView
     private lateinit var usernameEditText: EditText
-    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
+
+
     private var selectedImageUri: Uri? = null
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            Picasso.get().load(selectedImageUri).into(profileImageView)
+        }
+    }
 
     private val db = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                selectedImageUri = result.data?.data
-                Picasso.get().load(selectedImageUri).into(profileImageView)
-            }
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
@@ -50,7 +47,7 @@ class ProfileFragment : Fragment() {
         usernameEditText = view.findViewById(R.id.etUserName)
 
         view.findViewById<FloatingActionButton>(R.id.fabtnCamera).setOnClickListener {
-            openGalleryForImage()
+            pickImageLauncher.launch("image/*")
         }
 
         view.findViewById<Button>(R.id.btnSaveChanges).setOnClickListener {
@@ -65,11 +62,6 @@ class ProfileFragment : Fragment() {
         loadUserProfile()
 
         return view
-    }
-
-    private fun openGalleryForImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        pickImageLauncher.launch(intent)
     }
 
     private fun saveUserProfile() {
@@ -121,7 +113,7 @@ class ProfileFragment : Fragment() {
 
 
     private fun uploadImageAndUpdateProfile(userName: String) {
-        val storageRef = FirebaseStorage.getInstance().reference.child("userProfileImages/$userId")
+        val storageRef = FirebaseStorage.getInstance().reference.child("profileImages/$userId")
 
         selectedImageUri?.let { uri ->
             storageRef.putFile(uri).addOnSuccessListener { taskSnapshot ->
@@ -137,7 +129,7 @@ class ProfileFragment : Fragment() {
 
     private fun updateProfileData(username: String, imageUrl: String?) {
         val userUpdateMap = hashMapOf<String, Any>("username" to username)
-        imageUrl?.let { userUpdateMap["profileImageUrl"] = it }
+        imageUrl?.let { userUpdateMap["imageUrl"] = it }
 
         db.collection("users").document(userId)
             .update(userUpdateMap)

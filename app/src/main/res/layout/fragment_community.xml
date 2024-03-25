@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".CommunityFragment"
+    tools:context=".viewmodel.CommunityFragment"
     android:padding="@dimen/_10sdp">
 
     <TextView

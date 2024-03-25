@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.viewmodel
 
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.myplants.adapter.GardenAdapter
+import com.myplants.view.adapter.GardenAdapter
 import com.myplants.database.AppDatabase
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
+import com.myplants.R
 import com.myplants.model.Garden
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

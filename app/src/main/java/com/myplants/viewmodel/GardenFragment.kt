@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.viewmodel
 
 import PlantAdapter
 import android.app.AlertDialog
@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.myplants.R
 import com.myplants.model.Plant
 
 class GardenFragment : Fragment(), PlantAdapter.PlantActionListener {

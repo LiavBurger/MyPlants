@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.activities
 
 import android.graphics.Rect
 import android.view.MotionEvent

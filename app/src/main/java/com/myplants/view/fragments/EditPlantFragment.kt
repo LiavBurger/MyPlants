@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.storage.FirebaseStorage
+import com.myplants.R
 import com.squareup.picasso.Picasso
 import java.util.UUID
 
@@ -29,22 +30,18 @@ class EditPlantFragment : Fragment() {
     private lateinit var plantNameEditText: EditText
     private lateinit var plantTypeEditText: EditText
     private lateinit var plantImageView: ImageView
-    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
+
     private var selectedImageUri: Uri? = null
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            Picasso.get().load(selectedImageUri).into(plantImageView)
+        }
+    }
 
     private val db = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                selectedImageUri = result.data?.data
-                Picasso.get().load(selectedImageUri).into(plantImageView)
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,7 +69,7 @@ class EditPlantFragment : Fragment() {
         }
 
         view.findViewById<FloatingActionButton>(R.id.fabtnCamera).setOnClickListener {
-            openGalleryForImage()
+            pickImageLauncher.launch("image/*")
         }
 
         return view
@@ -139,13 +136,5 @@ class EditPlantFragment : Fragment() {
         oldImageRef.delete().addOnFailureListener { e ->
             Log.e("EditPlantFragment", "Error deleting old image: ${e.localizedMessage}")
         }
-    }
-
-
-    private fun openGalleryForImage() {
-        val intent = Intent(Intent.ACTION_PICK).apply {
-            setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-        }
-        pickImageLauncher.launch(intent)
     }
 }

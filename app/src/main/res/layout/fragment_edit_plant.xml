@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context=".EditPlantFragment">
+    tools:context=".view.fragments.EditPlantFragment">
 
     <LinearLayout
         android:id="@+id/linear_header"

@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.myplants.R
 import com.squareup.picasso.Picasso
 import java.util.UUID
 

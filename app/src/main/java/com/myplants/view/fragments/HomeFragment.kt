@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import com.myplants.R
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request

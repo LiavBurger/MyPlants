@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".CommunityGardenFragment">
+    tools:context=".viewmodel.CommunityGardenFragment">
 
     <TextView
         android:id="@+id/tv_community_garden_title"

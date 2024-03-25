@@ -1,19 +1,15 @@
-package com.myplants
+package com.myplants.view.activities
 
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.myplants.R
 
 class MainActivity : BaseActivity() {
 
@@ -51,7 +47,7 @@ class MainActivity : BaseActivity() {
         firestore.collection("users").document(userId).get()
             .addOnSuccessListener { document ->
                 val username = document.getString("username")
-                Toast.makeText(this, "Welcome back, $username", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Welcome, $username", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error fetching user data: ${e.message}", Toast.LENGTH_SHORT).show()

@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.myplants.R
 
 
 class LoginActivity : BaseActivity() {

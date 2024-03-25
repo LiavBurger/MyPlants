@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.viewmodel
 
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.myplants.adapter.CommunityPlantAdapter
+import com.myplants.R
+import com.myplants.view.adapter.CommunityPlantAdapter
 import com.myplants.model.Plant
 
 class CommunityGardenFragment : Fragment() {

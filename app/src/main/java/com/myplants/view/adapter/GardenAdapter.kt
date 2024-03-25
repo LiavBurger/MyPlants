@@ -1,4 +1,4 @@
-package com.myplants.adapter
+package com.myplants.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View

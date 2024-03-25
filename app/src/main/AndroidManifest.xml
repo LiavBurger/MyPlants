@@ -13,7 +13,7 @@
         android:theme="@style/Base.Theme.MyPlants"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".view.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".view.activities.RegisterActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.activities.MainActivity"
             android:exported="true">
         </activity>
     </application>

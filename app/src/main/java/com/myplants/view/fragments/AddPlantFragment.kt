@@ -1,4 +1,4 @@
-package com.myplants
+package com.myplants.view.fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.myplants.R
 import com.squareup.picasso.Picasso
 import java.util.UUID
 
@@ -30,19 +31,13 @@ class AddPlantFragment : Fragment() {
     private lateinit var plantTypeEditText: EditText
     private lateinit var plantImageView: ImageView
     private var selectedImageUri: Uri? = null
-    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
 
     private val db = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                selectedImageUri = result.data?.data
-                Picasso.get().load(selectedImageUri).into(plantImageView)
-            }
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            Picasso.get().load(selectedImageUri).into(plantImageView)
         }
     }
 
@@ -52,8 +47,9 @@ class AddPlantFragment : Fragment() {
         plantNameEditText = view.findViewById(R.id.etPlantName)
         plantTypeEditText = view.findViewById(R.id.etPlantType)
         plantImageView = view.findViewById(R.id.plantImage)
+
         view.findViewById<FloatingActionButton>(R.id.fabtnCamera).setOnClickListener {
-            openGalleryForImage()
+            pickImageLauncher.launch("image/*")
         }
 
         view.findViewById<Button>(R.id.btnAddPlant).setOnClickListener {
@@ -67,14 +63,6 @@ class AddPlantFragment : Fragment() {
 
         return view
     }
-
-    private fun openGalleryForImage() {
-        val intent = Intent(Intent.ACTION_PICK).apply {
-            setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-        }
-        pickImageLauncher.launch(intent)
-    }
-
 
     private fun addPlantToUserGarden() {
         val name = plantNameEditText.text.toString().trim()
